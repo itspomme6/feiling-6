@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>菲灵香风 | 专业头发护理系统</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Helvetica Neue', Arial, sans-serif; }
+        body { background: linear-gradient(135deg, #f9f5f0 0%, #f0e6e6 100%); color: #333; line-height: 1.6; }
+        .header { height: 100px; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 20px; background: linear-gradient(135deg, rgba(255,255,255,0.9) 0%, rgba(255,255,255,0.7) 100%); box-shadow: 0 2px 15px rgba(0,0,0,0.05); position: relative; z-index: 10; }
+        .header h1 { font-size: 24px; font-weight: 300; letter-spacing: 2px; color: #5a4a3f; text-transform: uppercase; }
+        .container { max-width: 100%; padding: 20px; margin-bottom: 100px; }
+        .series-intro { text-align: center; margin-bottom: 40px; }
+        .series-intro h2 { font-size: 20px; font-weight: 300; color: #8c7b6d; margin-bottom: 15px; letter-spacing: 1px; }
+        .series-intro p { font-size: 14px; color: #666; max-width: 600px; margin: 0 auto; }
+        .series-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-bottom: 40px; }
+        .series-card { background: white; border-radius: 12px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.08); transition: transform 0.3s ease; position: relative; }
+        .series-card:hover { transform: translateY(-5px); }
+        .series-card::before { content: ''; position: absolute; top: 0; left: 0; width: 5px; height: 100%; }
+        .series-card.purple::before { background: #9c7cb0; }
+        .series-card.green::before { background: #7cb083; }
+        .series-card.orange::before { background: #d4a76a; }
+        .series-header { padding: 20px; background: linear-gradient(135deg, #f8f3ee 0%, #e8dfd8 100%); border-bottom: 1px solid rgba(0,0,0,0.05); position: relative; }
+        .series-header h3 { font-size: 18px; font-weight: 400; color: #5a4a3f; margin-bottom: 8px; }
+        .series-header p { font-size: 14px; color: #8c7b6d; }
+        .series-header .process-tag { position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.05); padding: 3px 8px; border-radius: 10px; font-size: 12px; color: #5a4a3f; }
+        .series-content { padding: 20px; }
+        .product-list { margin-bottom: 15px; }
+        .product-list li { list-style: none; padding: 8px 0; border-bottom: 1px dashed #eee; font-size: 14px; color: #666; display: flex; justify-content: space-between; }
+        .product-list li .product-code { font-weight: 500; color: #b89f84; }
+        .features { margin-bottom: 15px; }
+        .features h4 { font-size: 15px; color: #5a4a3f; margin-bottom: 8px; font-weight: 400; }
+        .features p { font-size: 13px; color: #888; }
+        .ingredients { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; }
+        .ingredient { background: #f5f0eb; padding: 4px 10px; border-radius: 20px; font-size: 12px; color: #8c7b6d; }
+        .fragrance { margin-top: 15px; }
+        .fragrance h4 { font-size: 15px; color: #5a4a3f; margin-bottom: 8px; font-weight: 400; }
+        .fragrance-notes { display: flex; justify-content: space-between; margin-top: 10px; }
+        .note { text-align: center; flex: 1; padding: 0 5px; }
+        .note h5 { font-size: 12px; color: #8c7b6d; margin-bottom: 5px; font-weight: 400; }
+        .note p { font-size: 11px; color: #aaa; }
+        .note-icon { width: 30px; height: 30px; background: linear-gradient(135deg, #f5e9df 0%, #e8d5c5 100%); border-radius: 50%; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; color: #8c7b6d; font-size: 14px; }
+        .usage { margin-top: 20px; border-top: 1px dashed #eee; padding-top: 15px; }
+        .usage h4 { font-size: 15px; color: #5a4a3f; margin-bottom: 10px; font-weight: 400; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+        .usage h4::after { content: '+'; font-size: 18px; color: #b89f84; }
+        .usage h4.active::after { content: '-'; }
+        .usage-content { display: none; font-size: 13px; color: #666; }
+        .usage-content.active { display: block; }
+        .usage-step { margin-bottom: 10px; }
+        .usage-step h5 { font-weight: 500; color: #8c7b6d; margin-bottom: 5px; }
+        .usage-step p { margin-bottom: 5px; }
+        .usage-pump { background: #f5f0eb; padding: 8px; border-radius: 8px; margin-top: 10px; }
+        .usage-pump h5 { font-weight: 500; color: #8c7b6d; margin-bottom: 5px; }
+        .usage-pump ul { list-style: none; }
+        .usage-pump li { margin-bottom: 3px; }
+        .steps-section { margin-top: 40px; }
+        .steps-section h2 { text-align: center; font-size: 20px; font-weight: 300; color: #8c7b6d; margin-bottom: 25px; letter-spacing: 1px; }
+        .steps-timeline { position: relative; max-width: 800px; margin: 0 auto; }
+        .steps-timeline::before { content: ''; position: absolute; width: 2px; background-color: #e0d5cc; top: 0; bottom: 0; left: 50%; margin-left: -1px; }
+        .step { padding: 10px 40px; position: relative; width: 50%; box-sizing: border-box; }
+        .step:nth-child(odd) { left: 0; }
+        .step:nth-child(even) { left: 50%; }
+        .step::after { content: ''; position: absolute; width: 20px; height: 20px; background-color: white; border: 4px solid #d4c4b5; top: 20px; border-radius: 50%; z-index: 1; }
+        .step:nth-child(odd)::after { right: -12px; }
+        .step:nth-child(even)::after { left: -12px; }
+        .step-content { padding: 20px; background: white; border-radius: 8px; box-shadow: 0 3px 10px rgba(0,0,0,0.05); }
+        .step h3 { font-size: 16px; font-weight: 400; color: #5a4a3f; margin-bottom: 8px; }
+        .step p { font-size: 14px; color: #888; }
+        .products-detail { margin-top: 40px; }
+        .products-detail h2 { text-align: center; font-size: 20px; font-weight: 300; color: #8c7b6d; margin-bottom: 25px; letter-spacing: 1px; }
+        .product-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .product-card { background: white; border-radius: 10px; padding: 20px; box-shadow: 0 3px 10px rgba(0,0,0,0.05); }
+        .product-card h3 { font-size: 16px; font-weight: 400; color: #5a4a3f; margin-bottom: 10px; }
+        .product-card p { font-size: 14px; color: #888; margin-bottom: 8px; }
+        .product-card .highlight { color: #b89f84; font-weight: 500; }
+        .footer { text-align: center; padding: 30px 0; color: #8c7b6d; font-size: 12px; }
+        @media (max-width: 768px) {
+            .steps-timeline::before { left: 30px; }
+            .step { width: 100%; padding-left: 70px; padding-right: 20px; }
+            .step:nth-child(even) { left: 0; }
+            .step::after { left: 20px; }
+            .step:nth-child(odd)::after, .step:nth-child(even)::after { left: 20px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>菲灵香风 · 专业护发系统</h1>
+    </div>
+    
+    <div class="container" id="infographic-content">
+        <div class="series-intro">
+            <h2>多维护发系列</h2>
+            <p>针对不同发质问题，科学配比活性成分，实现从发芯到发丝的全方位护理</p>
+        </div>
+        
+        <div class="series-grid">
+            <div class="series-card green">
+                <div class="series-header">
+                    <h3>蓬松系列 <span class="process-tag">绿色</span></h3>
+                    <p>改善细软、脆弱无力，打造丰盈蓬松感</p>
+                </div>
+                <div class="series-content">
+                    <ul class="product-list">
+                        <li><span class="product-code">1N</span>菲灵香风多维蓬松发膜1N（基层处理）</li>
+                        <li><span class="product-code">2N</span>菲灵香风多维蓬松发膜2N（聚合处理）</li>
+                        <li><span class="product-code">3N</span>菲灵香风多维蓬松发膜3N（锁紧处理）</li>
+                        <li><span class="product-code">4N</span>菲灵香风多维蓬松发膜4N（维稳处理）</li>
+                    </ul>
+                    <div class="features">
+                        <h4>优势特点</h4>
+                        <p>轻盈蓬松顺滑飘逸，轻松拥有高颅顶</p>
+                    </div>
+                    <div class="ingredients">
+                        <span class="ingredient">水解小麦蛋白</span>
+                        <span class="ingredient">佩兰提取物</span>
+                        <span class="ingredient">刺阿干树仁油</span>
+                        <span class="ingredient">多种神经酰胺</span>
+                    </div>
+                    <div class="fragrance">
+                        <h4>香调</h4>
+                        <div class="fragrance-notes">
+                            <div class="note">
+                                <div class="note-icon"><i class="fas fa-lemon"></i></div>
+                                <h5>前调</h5>
+                                <p>香柠檬、格蓬、海洋</p>
+                            </div>
+                            <div class="note">
+                                <div class="note-icon"><i class="fas fa-spa"></i></div>
+                                <h5>中调</h5>
+                                <p>玫瑰、茉莉、鸢尾</p>
+                            </div>
+                            <div class="note">
+                                <div class="note-icon"><i class="fas fa-moon"></i></div>
+                                <h5>后调</h5>
+                                <p>粉香、龙涎香</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="usage">
+                        <h4>使用方法 <span class="process-tag">绿色系列专用</span></h4>
+                        <div class="usage-content">
+                            <div class="usage-step">
+                                <h5>1. 发质判断清洁头发</h5>
+                                <p>根据发质类型选择适合的清洁方式，为后续护理做好准备</p>
+                            </div>
+                            <div class="usage-step">
+                                <h5>2. 涂抹1号发膜</h5>
+                                <p>双手拇指交替按摩吸收后温水冲净（操作中喷纯净水避免发躁）</p>
+                            </div>
+                            <div class="usage-step">
+                                <h5>3. 直接涂抹2号发膜</h5>
+                                <p>无需停留</p>
+                            </div>
+                            <div class="usage-step">
+                                <h5>4. 涂抹3号发膜</h5>
+                                <p>①均匀涂从发梢至发中；②按摩，停放15分钟后冲洗；③温水冲净</p>
+                            </div>
+                            <div class="usage-pump">
+                                <h5>用量参考：</h5>
+                                <ul>
+                                    <li>6-10cm短发：10g=3泵</li>
+                                    <li>10-25cm中发：20g=6泵</li>
+                                    <li>25-35cm长发：30g=9泵</li>
+                                    <li>发量多可加1-2泵</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="series-card purple">
+                <div class="series-header">
+                    <h3>臻护系列 <span class="process-tag">紫色</span></h3>
+                    <p>抚平毛糙，告别"炸毛"，立现顺亮泽"绸缎发"</p>
+                </div>
+                <div class="series-content">
+                    <ul class="product-list">
+                        <li><span class="product-code">1S</span>菲灵香风多维臻护发膜1S（基层处理）</li>
+                        <li><span class="product-code">2S</span>菲灵香风多维臻护发膜2S（聚合处理）</li>
+                        <li><span class="product-code">3S</span>菲灵香风多维臻护发膜3S（锁紧处理）</li>
+                        <li><span class="product-code">4S</span>菲灵香风多维臻护发膜4S（维稳处理）</li>
+                    </ul>
+                    <div class="features">
+                        <h4>优势特点</h4>
+                        <p>精心呵护，丝滑亮泽，芬芳怡人</p>
+                    </div>
+                    <div class="ingredients">
+                        <span class="ingredient">多重植物蛋白</span>
+                        <span class="ingredient">人参根提取物</span>
+                        <span class="ingredient">霍霍巴籽油</span>
+                        <span class="ingredient">氨基酸活性肽</span>
+                    </div>
+                    <div class="fragrance">
+                        <h4>香调</h4>
+                        <div class="fragrance-notes">
+                            <div class="note">
+                                <div class="note-icon"><i class="fas fa-apple-alt"></i></div>
+                                <h5>前调</h5>
+                                <p>佛手柑、青苹果、瓜香</p>
+                            </div>
+                            <div class="note">
+                                <div class="note-icon"><i class="fas fa-leaf"></i></div>
+                                <h5>中调</h5>
+                                <p>玫瑰、紫罗兰、茉莉</p>
+                            </div>
+                            <div class="note">
+                                <div class="note-icon"><i class="fas fa-mountain"></i></div>
+                                <h5>后调</h5>
+                                <p>檀香、麝香、龙涎香</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="usage">
+                        <h4>使用方法 <span class="process-tag">紫色系列专用</span></h4>
+                        <div class="usage-content">
+                            <div class="usage-step">
+                                <h5>1. 发质判断清洁头发</h5>
+                                <p>根据发质类型选择适合的清洁方式，为后续护理做好准备</p>
+                            </div>
+                            <div class="usage-step">
+                                <h5>2. 涂抹1号发膜均匀后，直接上2号护理</h5>
+                            </div>
+                            <div class="usage-step">
+                                <h5>3. 涂抹2号发膜</h5>
+                                <p>①取适量涂放至1号涂抹处；②停留十分钟后冲洗</p>
+                            </div>
+                            <div class="usage-step">
+                                <h5>4. 涂抹3号发膜</h5>
+                                <p>①均匀涂从发梢至发中；②按摩，停放15分钟后冲洗；③温水冲净</p>
+                            </div>
+                            <div class="usage-pump">
+                                <h5>用量参考：同绿色系列</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="series-card orange">
+                <div class="series-header">
+                    <h3>质感系列 <span class="process-tag">橙色</span></h3>
+                    <p>修护染后发况，深层润养，焕发芯生</p>
+                </div>
+                <div class="series-content">
+                    <ul class="product-list">
+                        <li><span class="product-code">1M</span>菲灵香风多维质感发膜1M（基层处理）</li>
+                        <li><span class="product-code">2M</span>菲灵香风多维质感发膜2M（聚合处理）</li>
+                        <li><span class="product-code">3M</span>菲灵香风多维质感发膜3M（锁紧处理）</li>
+                        <li><span class="product-code">4M</span>菲灵香风多维质感发膜4M（维稳处理）</li>
+                    </ul>
+                    <div class="features">
+                        <h4>优势特点</h4>
+                        <p>护色亮泽，丝滑柔软，芬芳怡人</p>
+                    </div>
+                    <div class="ingredients">
+                        <span class="ingredient">水解蛋白</span>
+                        <span class="ingredient">昆诺阿藜籽</span>
+                        <span class="ingredient">小麦胚芽油</span>
+                        <span class="ingredient">活性多肽</span>
+                    </div>
+                    <div class="fragrance">
+                        <h4>香调</h4>
+                        <div class="fragrance-notes">
+                            <div class="note">
+                                <div class="note-icon"><i class="fas fa-pepper-hot"></i></div>
+                                <h5>前调</h5>
+                                <p>香柠檬、生姜、梨</p>
+                            </div>
+                            <div class="note">
+                                <div class="note-icon"><i class="fas fa-feather-alt"></i></div>
+                                <h5>中调</h5>
+                                <p>麦香、木兰、茉莉</p>
+                            </div>
+                            <div class="note">
+                                <div class="note-icon"><i class="fas fa-tree"></i></div>
+                                <h5>后调</h5>
+                                <p>开司米木、安息香脂</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="usage">
+                        <h4>使用方法 <span class="process-tag">橙色系列专用</span></h4>
+                        <div class="usage-content">
+                            <p>同紫色系列使用方法（步骤一致，产品编号对应1M、2M、3M）</p>
+                            <div class="usage-pump">
+                                <h5>用量参考：同绿色系列</h5>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="steps-section">
+            <h2>专业护发步骤</h2>
+            <div class="steps-timeline">
+                <div class="step">
+                    <div class="step-content">
+                        <h3>01. 判断发质清洁头发</h3>
+                        <p>根据发质类型选择适合的清洁方式，为后续护理做好准备</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-content">
+                        <h3>02. 涂抹1号发膜</h3>
+                        <p>基层处理：内外一致均匀质感，修护发芯</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-content">
+                        <h3>03. 涂抹2号发膜</h3>
+                        <p>聚合处理：建立头发核心坚实结构</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-content">
+                        <h3>04. 涂抹3号发膜</h3>
+                        <p>锁紧处理：优化发层保护屏障</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="products-detail">
+            <h2>产品核心技术</h2>
+            <div class="product-cards">
+                <div class="product-card">
+                    <h3>蓬松系列</h3>
+                    <p><span class="highlight">1N</span> 基层处理：水解小麦蛋白，分子结构亲发力强</p>
+                    <p><span class="highlight">2N</span> 聚合处理：特研晨露液态质地，提高膨胀性</p>
+                    <p><span class="highlight">3N</span> 锁紧处理：刺阿干树仁油，柔顺提亮干枯发丝</p>
+                    <p><span class="highlight">4N</span> 维稳处理：多种神经酰胺，强化抵抗、蓬松增亮</p>
+                </div>
+                <div class="product-card">
+                    <h3>臻护系列</h3>
+                    <p><span class="highlight">1S</span> 基层处理：多重植物蛋白修护成分</p>
+                    <p><span class="highlight">2S</span> 聚合处理：多重植粹精华，强韧发芯</p>
+                    <p><span class="highlight">3S</span> 锁紧处理：霍霍巴籽油、角鲨烷，锁水保湿</p>
+                    <p><span class="highlight">4S</span> 维稳处理：多种氨基酸活性肽，维稳养护</p>
+                </div>
+                <div class="product-card">
+                    <h3>质感系列</h3>
+                    <p><span class="highlight">1M</span> 基层处理：水解蛋白和水解蚕丝成分</p>
+                    <p><span class="highlight">2M</span> 聚合处理：昆诺阿藜籽提取物，增强染着色剂沉积</p>
+                    <p><span class="highlight">3M</span> 锁紧处理：小麦胚芽油，油橄榄果油，润泽提亮</p>
+                    <p><span class="highlight">4M</span> 维稳处理：多种活性多肽和神经酰胺成分</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>© 2025 菲灵香风专业护发系统 | 信息图 By @一泽</p>
+        </div>
+    </div>
+
+    <script>
+        // 使用方法折叠面板交互
+        document.querySelectorAll('.usage h4').forEach(header => {
+            header.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                this.classList.toggle('active');
+                content.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
